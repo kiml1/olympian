@@ -7,15 +7,18 @@ library(googleVis)
 #### data set ####
 athlete_events.df <- read.csv("./dataset/athlete_events.csv")
 noc_regions.df <- read.csv("./dataset/noc_regions.csv")
+athlete_regions.df <- inner_join(athlete_events.df, noc_regions.df, by = "NOC")
 
 #### treated data set ####
-#(plot1) medals count by country by year
-plot1 <-
-  inner_join(athlete_events.df, noc_regions.df, by = "NOC") %>% select(region, Event, Medal, Year) %>% 
-  filter(!is.na(Medal)) %>% group_by(region, Event, Year) %>% summarise() %>% ungroup() %>% 
-  group_by(region, Year) %>% summarise(medalCount = n())
+#(plot1) medals by country world map
+plot1 <- athlete_regions.df %>% group_by(region, Year, Event, Medal) %>% summarise("Medal Count" = n()) %>% 
+  mutate(MedalCount = ifelse(Medal %in% c("Bronze", "Silver", "Gold"), 1, 0)) %>% select(-Medal) %>% 
+  ungroup() %>% group_by(region) %>% summarise("Total Medals" = sum(MedalCount)) %>% filter(!is.na(region)) %>% 
+  mutate(region = ifelse(region == "USA", "United States", region))
 
-#(plot2)
+#(plot2) ranking of countries by medal count with user input
+#done in server.R
+
 
 
 
@@ -45,7 +48,7 @@ Let's try to find out."
 
 topic1Title = "Performance of each country in the Olympics"
 topic1Paragraph1 = "Ever since the start of the Olympics, it was possible to note a dominance in the number
-of medals in a handful number of countries. They are: Russia, USA, Great Britan, Germany and China"
+of medals in a handful number of countries."
 
 topic2Title = "Women in the Olympics"
 topic2Paragraph1 = "The first participation of women in the Olympics was in 1900. Women participated in the 

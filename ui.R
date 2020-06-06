@@ -20,8 +20,9 @@ fluidPage(navbarPage(
             topic1Paragraph1,
             tags$br()
         ),
-        tags$div("PLOT1 HERE - medals by country by year for 5 countries", style="color:red"),
-        tags$div("PLOT2 HERE - medals by country world map", style="color:red"),
+        htmlOutput("plot1"),
+        sliderInput("topNcountries", "Top contries:", min=5, max=20, value=5, step=1),
+        htmlOutput("plot2"),
         tags$h3(topic2Title),
         tags$div(
             topic2Paragraph1,
