@@ -6,29 +6,20 @@ fluidPage(navbarPage(
         tags$h4("by Lucas Kim, June 2020"),
         
         tags$h3(introTitle1),
-        tags$div(
-            introParagraph1,
-            tags$br(),
-            introParagraph2,
-            tags$br(),
-            introParagraph3,
-            tags$br(),
-            introParagraph4
-        ),
+        tags$div(introParagraph1,tags$br(),introParagraph2,tags$br(),introParagraph3,tags$br(),introParagraph4),
+        
         tags$h3(topic1Title),
-        tags$div(
-            topic1Paragraph1,
-            tags$br()
-        ),
+        tags$div(topic1Paragraph1,tags$br()),
         htmlOutput("plot1"),
         sliderInput("topNcountries", "Top contries:", min=5, max=20, value=5, step=1),
         htmlOutput("plot2"),
+        
         tags$h3(topic2Title),
-        tags$div(
-            topic2Paragraph1,
-            tags$br()
-        ),
-        tags$div("PLOT3 HERE - evolution of women in the olympics", style="color:red"),
+        tags$div(topic2Paragraph1,tags$br()),
+        htmlOutput("plot3"),
+        plotOutput("plot4"),
+        plotOutput("plot5"),
+        
         tags$h3(topic3Title),
         tags$div(
             topic3Paragraph1,

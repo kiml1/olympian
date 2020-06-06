@@ -3,10 +3,13 @@ library(shiny)
 library(shinythemes)
 library(dplyr)
 library(googleVis)
+library(data.table)
+library(tidyverse)
 
 #### data set ####
 athlete_events.df <- read.csv("./dataset/athlete_events.csv")
-noc_regions.df <- read.csv("./dataset/noc_regions.csv")
+noc_regions.df <- read.csv("./dataset/noc_regions.csv") %>% 
+  mutate(region = ifelse(region == "Boliva", "Bolivia", region)) #fix typos
 athlete_regions.df <- inner_join(athlete_events.df, noc_regions.df, by = "NOC")
 
 #### treated data set ####
@@ -19,10 +22,42 @@ plot1 <- athlete_regions.df %>% group_by(region, Year, Event, Medal) %>% summari
 #(plot2) ranking of countries by medal count with user input
 #done in server.R
 
+#(plot3) rate of women athletes in the olympics every year
+# match the year of winter games with summer games to have a better graph
+plot3 <- athlete_regions.df %>% mutate(Year = ifelse(Year == 1994, 1996, 
+                                              ifelse(Year == 1998, 2000, 
+                                              ifelse(Year == 2002, 2004,
+                                              ifelse(Year == 2006, 2008,
+                                              ifelse(Year == 2010, 2012,
+                                              ifelse(Year == 2014, 2016, Year))))))) %>% 
+  group_by(Sex, Year) %>% summarise("Number of athletes" = length(unique(ID))) %>% 
+  mutate(Female = ifelse(Sex == "F", `Number of athletes`, NA)) %>% 
+  mutate(Male = ifelse(Sex == "M", `Number of athletes`, NA))
+
+#(plot4) ratio of women for each country in 1900
+plot4 <- athlete_regions.df %>% mutate(Year = ifelse(Year == 1994, 1996, 
+                                              ifelse(Year == 1998, 2000, 
+                                              ifelse(Year == 2002, 2004,
+                                              ifelse(Year == 2006, 2008,
+                                              ifelse(Year == 2010, 2012,
+                                              ifelse(Year == 2014, 2016, Year))))))) %>% 
+ group_by(Year, region, Sex) %>% summarise("No Athletes" = length(unique(ID)))
+  
+plot4_1 <- dcast(setDT(plot4), Year + region ~ Sex, fun.aggregate = sum, value.var = "No Athletes") %>% 
+  mutate(ratio = F/(F+M)) %>% filter(Year == 1900)
+
+level4_1 <- plot4_1 %>% arrange(ratio) %>% select(region)
+
+plot4_1$region <- factor(plot4_1$region, levels = c(level4_1$region))
 
 
+#(plot5) ratio of women for each country in 2016
+plot5 <- dcast(setDT(plot4), Year + region ~ Sex, fun.aggregate = sum, value.var = "No Athletes") %>% 
+  mutate(ratio = F/(F+M)) %>% filter(Year == 2016)
 
+level5_1 <- plot5 %>% arrange(ratio) %>% select(region)
 
+plot5$region <- factor(plot5$region, levels = c(level5_1$region))
 
 
 #### texts ####
