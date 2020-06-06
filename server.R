@@ -25,4 +25,10 @@ function(input, output) {
               axis.text.y = element_text(size=6)) +
         xlim(0,1)
     })
+    
+    output$plot6 <- renderPlot({
+      ggplot(plot6_1, aes(x = region, y = value, label = value)) +
+        geom_point(stat = 'identity', aes(col = type), size = 6)  +
+        coord_flip()
+    })
 }

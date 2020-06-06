@@ -19,6 +19,7 @@ fluidPage(navbarPage(
         htmlOutput("plot3"),
         plotOutput("plot4"),
         plotOutput("plot5"),
+        htmlOutput("plot6"),
         
         tags$h3(topic3Title),
         tags$div(

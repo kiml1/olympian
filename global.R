@@ -1,16 +1,28 @@
 #### libraries ####
 library(shiny)
 library(shinythemes)
-library(dplyr)
+#library(dplyr)
 library(googleVis)
 library(data.table)
 library(tidyverse)
+
 
 #### data set ####
 athlete_events.df <- read.csv("./dataset/athlete_events.csv")
 noc_regions.df <- read.csv("./dataset/noc_regions.csv") %>% 
   mutate(region = ifelse(region == "Boliva", "Bolivia", region)) #fix typos
 athlete_regions.df <- inner_join(athlete_events.df, noc_regions.df, by = "NOC")
+gii.df <- read.csv("./dataset/GII.csv", skip=1) %>% .[, unlist(lapply(., function(x) !all(is.na(x))))] %>% 
+  dplyr::rename(region = Country)
+
+
+#### data set cleaner ####
+#regionName <- function(df) {
+#  df$region <- as.character(df$region)
+#  df$region[df$region == ""] <- ""
+#}
+
+
 
 #### treated data set ####
 #(plot1) medals by country world map
@@ -50,7 +62,6 @@ level4_1 <- plot4_1 %>% arrange(ratio) %>% select(region)
 
 plot4_1$region <- factor(plot4_1$region, levels = c(level4_1$region))
 
-
 #(plot5) ratio of women for each country in 2016
 plot5 <- dcast(setDT(plot4), Year + region ~ Sex, fun.aggregate = sum, value.var = "No Athletes") %>% 
   mutate(ratio = F/(F+M)) %>% filter(Year == 2016)
@@ -58,6 +69,30 @@ plot5 <- dcast(setDT(plot4), Year + region ~ Sex, fun.aggregate = sum, value.var
 level5_1 <- plot5 %>% arrange(ratio) %>% select(region)
 
 plot5$region <- factor(plot5$region, levels = c(level5_1$region))
+
+#(plot6) GII index and women athletes comparison
+# fix region names
+plot5$region <- as.character(plot5$region)
+plot5$region[plot5$region == "USA"] <- "United States"
+plot5$region[plot5$region == "UK"] <- "United Kingdom"
+gii.df$region <- as.character(gii.df$region)
+gii.df$region[gii.df$region =="Korea (Republic of)"] <- "South Korea"
+gii.df$region[gii.df$region =="Russian Federation"] <- "Russia"
+gii.df$region[gii.df$region =="Viet Nam"] <- "Vietnam"
+gii.df$region[gii.df$region =="Tanzania"] <- "Tanzania"
+gii.df$region[gii.df$region =="Venezuela (Bolivarian Republic of)"] <- "Venezuela"
+# join women athletes ratio and GII tables on region
+plot6 <- full_join(
+  plot5 %>% select(region, ratio) %>% filter(!is.na(region)), 
+  gii.df %>% filter(X2016 != "..") %>% select(region, X2016), 
+  by ="region")
+# fix column so that googleVis can plot
+plot6$X2016 <- as.numeric(plot6$X2016)
+# final df to be plotted
+plot6_1 <- plot6 %>% filter(!is.na(ratio)) %>% filter(!is.na(X2016))
+
+plot6_1 <- plot6_1 %>% gather(ratio, X2016, key="type", value="value") %>% arrange(region) %>% head(10)
+
 
 
 #### texts ####
@@ -90,6 +125,13 @@ topic2Paragraph1 = "The first participation of women in the Olympics was in 1900
 Games in Paris, France. Twenty-two women (2.2 per cent) out of a total of 997 athletes competed in five sports:
 tennis, sailing, croquet, equestrian and golf.
 The number of female athletes has been increasing since then."
+topics2Paragraph2 = "What are the characteristics of countries with the highest ratio of women representing 
+the country? Can we relate them to any indexes? The GII is an inequality index. It measures gender 
+inequalities in three important aspects of human development—reproductive health, measured by maternal 
+mortality ratio and adolescent birth rates; empowerment, measured by proportion of parliamentary seats 
+occupied by females and proportion of adult females and males aged 25 years and older with at least some 
+secondary education; and economic status, expressed as labour market participation and measured by labour 
+force participation rate of female and male populations aged 15 years and older."
 
 topic3Title = "Physical characteristics of Olympic athletes"
 topic3Paragraph1 = "How tall or fit is an Olympian? Of course it may depend on the type of sport but let's 
@@ -115,5 +157,7 @@ Olympian country? Could we predict the next underdog champion?"
 "https://en.wikipedia.org/wiki/Participation_of_women_in_the_Olympics"
 "https://www.olympic.org/women-in-sport/background/key-dates"
 "https://www.nytimes.com/2018/02/28/well/move/do-you-have-what-it-takes-to-be-an-olympian.html#:~:text=Becoming%20the%20most%20decorated%20Winter,surprisingly%20light%20intensity%20%E2%80%94%20and%20a"
+"http://hdr.undp.org/en/data#"
+"http://hdr.undp.org/sites/default/files/hdr2019_technical_notes.pdf"
 
 
