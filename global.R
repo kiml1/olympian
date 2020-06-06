@@ -72,6 +72,7 @@ Do some countries do better in Winter (or Summer) Olympics than others? What ind
 Olympian country? Could we predict the next underdog champion?"
 
 
+
 #### references ####
 "https://en.wikipedia.org/wiki/Participation_of_women_in_the_Olympics"
 "https://www.olympic.org/women-in-sport/background/key-dates"
