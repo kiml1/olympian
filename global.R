@@ -5,6 +5,8 @@ library(shinythemes)
 library(googleVis)
 library(data.table)
 library(tidyverse)
+library(ggplot2)
+library(reactable)
 
 
 #### data set ####
@@ -25,18 +27,18 @@ gii.df <- read.csv("./dataset/GII.csv", skip=1) %>% .[, unlist(lapply(., functio
 
 
 #### treated data set ####
-#(plot1) medals by country world map
-plot1 <- athlete_regions.df %>% group_by(region, Year, Event, Medal) %>% summarise("Medal Count" = n()) %>% 
+#(plot1_1) medals by country world map
+plot1_1 <- athlete_regions.df %>% dplyr::group_by(region, Year, Event, Medal) %>% summarise("Medal Count" = n()) %>% 
   mutate(MedalCount = ifelse(Medal %in% c("Bronze", "Silver", "Gold"), 1, 0)) %>% select(-Medal) %>% 
   ungroup() %>% group_by(region) %>% summarise("Total Medals" = sum(MedalCount)) %>% filter(!is.na(region)) %>% 
   mutate(region = ifelse(region == "USA", "United States", region))
 
-#(plot2) ranking of countries by medal count with user input
+#(plot1_2) ranking of countries by medal count with user input
 #done in server.R
 
-#(plot3) rate of women athletes in the olympics every year
+#(plot2_1) rate of women athletes in the olympics every year
 # match the year of winter games with summer games to have a better graph
-plot3 <- athlete_regions.df %>% mutate(Year = ifelse(Year == 1994, 1996, 
+plot2_1 <- athlete_regions.df %>% mutate(Year = ifelse(Year == 1994, 1996, 
                                               ifelse(Year == 1998, 2000, 
                                               ifelse(Year == 2002, 2004,
                                               ifelse(Year == 2006, 2008,
@@ -46,8 +48,8 @@ plot3 <- athlete_regions.df %>% mutate(Year = ifelse(Year == 1994, 1996,
   mutate(Female = ifelse(Sex == "F", `Number of athletes`, NA)) %>% 
   mutate(Male = ifelse(Sex == "M", `Number of athletes`, NA))
 
-#(plot4) ratio of women for each country in 1900
-plot4 <- athlete_regions.df %>% mutate(Year = ifelse(Year == 1994, 1996, 
+#(plot2_2) ratio of women for each country in 1900
+plot2_2 <- athlete_regions.df %>% mutate(Year = ifelse(Year == 1994, 1996, 
                                               ifelse(Year == 1998, 2000, 
                                               ifelse(Year == 2002, 2004,
                                               ifelse(Year == 2006, 2008,
@@ -55,26 +57,26 @@ plot4 <- athlete_regions.df %>% mutate(Year = ifelse(Year == 1994, 1996,
                                               ifelse(Year == 2014, 2016, Year))))))) %>% 
  group_by(Year, region, Sex) %>% summarise("No Athletes" = length(unique(ID)))
   
-plot4_1 <- dcast(setDT(plot4), Year + region ~ Sex, fun.aggregate = sum, value.var = "No Athletes") %>% 
+plot2_2_1 <- dcast(setDT(plot2_2), Year + region ~ Sex, fun.aggregate = sum, value.var = "No Athletes") %>% 
   mutate(ratio = F/(F+M)) %>% filter(Year == 1900)
 
-level4_1 <- plot4_1 %>% arrange(ratio) %>% select(region)
+level2_2_1 <- plot2_2_1 %>% arrange(ratio) %>% select(region)
 
-plot4_1$region <- factor(plot4_1$region, levels = c(level4_1$region))
+plot2_2_1$region <- factor(plot2_2_1$region, levels = c(level2_2_1$region))
 
-#(plot5) ratio of women for each country in 2016
-plot5 <- dcast(setDT(plot4), Year + region ~ Sex, fun.aggregate = sum, value.var = "No Athletes") %>% 
+#(plot2_3) ratio of women for each country in 2016
+plot2_3 <- dcast(setDT(plot2_2), Year + region ~ Sex, fun.aggregate = sum, value.var = "No Athletes") %>% 
   mutate(ratio = F/(F+M)) %>% filter(Year == 2016)
 
-level5_1 <- plot5 %>% arrange(ratio) %>% select(region)
+level2_3_1 <- plot2_3 %>% arrange(ratio) %>% select(region)
 
-plot5$region <- factor(plot5$region, levels = c(level5_1$region))
+plot2_3$region <- factor(plot2_3$region, levels = c(level2_3_1$region))
 
-#(plot6) GII index and women athletes comparison
+#(plot2_4) GII index and women athletes comparison
 # fix region names
-plot5$region <- as.character(plot5$region)
-plot5$region[plot5$region == "USA"] <- "United States"
-plot5$region[plot5$region == "UK"] <- "United Kingdom"
+plot2_3$region <- as.character(plot2_3$region)
+plot2_3$region[plot2_3$region == "USA"] <- "United States"
+plot2_3$region[plot2_3$region == "UK"] <- "United Kingdom"
 gii.df$region <- as.character(gii.df$region)
 gii.df$region[gii.df$region =="Korea (Republic of)"] <- "South Korea"
 gii.df$region[gii.df$region =="Russian Federation"] <- "Russia"
@@ -82,16 +84,73 @@ gii.df$region[gii.df$region =="Viet Nam"] <- "Vietnam"
 gii.df$region[gii.df$region =="Tanzania"] <- "Tanzania"
 gii.df$region[gii.df$region =="Venezuela (Bolivarian Republic of)"] <- "Venezuela"
 # join women athletes ratio and GII tables on region
-plot6 <- full_join(
-  plot5 %>% select(region, ratio) %>% filter(!is.na(region)), 
+plot2_4 <- full_join(
+  plot2_3 %>% select(region, ratio) %>% filter(!is.na(region)), 
   gii.df %>% filter(X2016 != "..") %>% select(region, X2016), 
   by ="region")
 # fix column so that googleVis can plot
-plot6$X2016 <- as.numeric(plot6$X2016)
+plot2_4$X2016 <- as.numeric(plot2_4$X2016)
 # final df to be plotted
-plot6_1 <- plot6 %>% filter(!is.na(ratio)) %>% filter(!is.na(X2016))
+plot2_4_1 <- plot2_4 %>% filter(!is.na(ratio)) %>% filter(!is.na(X2016))
 
-plot6_1 <- plot6_1 %>% gather(ratio, X2016, key="type", value="value") %>% arrange(region) %>% head(10)
+plot2_4_1 <- plot2_4_1 %>% gather(ratio, X2016, key="type", value="value") %>% arrange(region)
+
+#(plot3_1) change in height of olympic athletes across the years
+#filter NA values for the plot
+plot3_1 <- athlete_events.df %>% filter(!is.na(Height))
+
+#(plot3_2) change in weight of olympic athletes across the years
+#filter NA values for the plot
+plot3_2 <- athlete_events.df %>% filter(!is.na(Weight))
+
+#(plot3_3) scatterplot of heightxweight for men in athletics
+scatterHxW <- athlete_events.df %>% filter(!is.na(Weight)) %>% filter(!is.na(Height)) %>% filter(Year %in% c(1968,2016))
+#get rid of duplicates athletes using distinct
+scatterHxW <- distinct(scatterHxW, ID, .keep_all = TRUE)
+#to get a better plot visualization, change the column Year to class character
+scatterHxW$Year <- as.character(scatterHxW$Year)
+#finally, filter to men only
+plot3_3 <- scatterHxW %>% filter(Sex == "M")
+
+#(plot3_4) scatterplot of heightxweight for women in athletics
+#we can use most of the work done for plat3_3 and just filter for women
+plot3_4 <- scatterHxW %>% filter(Sex == "F")
+
+#(plot3_3 & plot3_4) create a list of sports to be selected by the user
+sportsFemale1968 <- scatterHxW %>% select(Sex, Year, Sport) %>% filter(Sex=="F") %>% filter(Year=="1968") %>% distinct(., Sport, .keep_all=TRUE)
+sportsFemale2016 <- scatterHxW %>% select(Sex, Year, Sport) %>% filter(Sex=="F") %>% filter(Year=="2016") %>% distinct(., Sport, .keep_all=TRUE)
+sportsMale1968 <- scatterHxW %>% select(Sex, Year, Sport) %>% filter(Sex=="M") %>% filter(Year=="1968") %>% distinct(., Sport, .keep_all=TRUE)
+sportsMale2016 <- scatterHxW %>% select(Sex, Year, Sport) %>% filter(Sex=="M") %>% filter(Year=="2016") %>% distinct(., Sport, .keep_all=TRUE)
+
+sportsFemale <- inner_join(sportsFemale1968, sportsFemale2016, by="Sport")
+sportsMale <- inner_join(sportsMale1968, sportsMale2016, by="Sport")
+
+listOfSports <- inner_join(sportsFemale, sportsMale, by = "Sport")$Sport
+
+#(plot3_5) age of athletes
+plot3_5 <- athlete_regions.df %>% mutate(Year = ifelse(Year == 1994, 1996, 
+                                                ifelse(Year == 1998, 2000, 
+                                                ifelse(Year == 2002, 2004,
+                                                ifelse(Year == 2006, 2008,
+                                                ifelse(Year == 2010, 2012,
+                                                ifelse(Year == 2014, 2016, Year))))))) %>% 
+  filter(!is.na(Age)) %>% group_by(Sex, Year) %>% summarise("Average Age" = mean(Age))
+
+#(table4_1) list of athletes with most medals
+table4_1 <- athlete_events.df %>% filter(!is.na(Medal)) %>% group_by(Name, Medal) %>%
+  summarize(Medals=n()) %>% ungroup() %>% group_by(Name) %>% mutate(Total = sum(Medals)) 
+#this is a hack I had to do to make an ordered list to level the factor later
+table4_1Namelevels <- table4_1 %>% distinct(., Name, .keep_all=TRUE) %>% 
+  arrange(Total) %>% select(Name) %>% tail(10)
+table4_1Medallevels <- table4_1 %>% ungroup() %>% distinct(., Medal)
+table4_1Medallevels[1,1] = "Bronze"
+table4_1Medallevels[2,1] = "Silver"
+table4_1Medallevels[3,1] = "Gold"
+table4_1 <- inner_join(table4_1, table4_1Namelevels, by="Name") 
+# factor columns so it shows in an ordered manner for the graph
+table4_1$Name <- factor(table4_1$Name, levels=table4_1Namelevels$Name)
+table4_1$Medal <- factor(table4_1$Medal, levels=table4_1Medallevels$Medal)
+
 
 
 
@@ -144,6 +203,8 @@ of mankind were able to do that."
 topic4Paragraph2 = "What we want to analize here is what differs outliers from other athletes. The physical 
 characteristics take a role in this? From which country these people come from? Is it more appearant in a 
 specific sport?"
+topic4Paragraph3 = "So we see that the athletes with the most Olympic medals tend  to come from developed 
+countries. Does it have a correlation? Let's find out."
 
 topic5Title = "Influence of a country's economy in Olympics"
 topic5Paragraph1 = "Now that we looked into the athletes themselves, we could examine why and how some countries 
