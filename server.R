@@ -8,8 +8,12 @@ function(input, output) {
                     colorvar="GDPbillions", sizevar = "GDPbillions",
                     options=list(width=800, height=600))
   })
-  
-  
+
+  output$plot1_3 <- renderGvis({
+    gvisBubbleChart(plot1_3, idvar = "Country.Name", xvar = "Medals", yvar = input$indices, 
+                    colorvar=input$indices, sizevar = input$indices,
+                    options=list(width=800, height=600))
+  })
   
   
   

@@ -18,6 +18,10 @@ gii.df <- read.csv("./dataset/GII.csv", skip=1) %>% .[, unlist(lapply(., functio
 gdp.df <- read.csv("./dataset/GDP.csv", skip=3)
 area.df <- read.csv("./dataset/country_area.csv", skip=3)
 population.df <- read.csv("./dataset/population.csv", skip=3)
+gdpCapita.df <- read.csv("./dataset/gdp_capita.csv", skip=3)
+educationGDP.df <- read.csv("./dataset/educationGDP.csv", skip=3)
+mortalityRate.df <- read.csv("./dataset/mortalityRate.csv", skip=3)
+gini.df <- read.csv("./dataset/gini.csv", skip=3)
 
 #### treated data set ####
 #(plot1_1) medals by country world map
@@ -29,12 +33,30 @@ plot1_1 <- athlete_regions.df %>% dplyr::group_by(region, Year, Event, Medal) %>
 #(plot1_2) number of medals vs GDP
 medalsCountries <- athlete_events.df %>% filter(!is.na(Medal)) %>% group_by(NOC, Year) %>% 
   distinct(., Event, .keep_all=TRUE) %>% summarise(Medals=n())
+
 gdpCountries <- gdp.df %>% select(Country.Name, NOC=Country.Code, X2016)
 
 plot1_2 <- inner_join(medalsCountries, gdpCountries, by ="NOC") %>% filter(Year == 2016) %>% ungroup() %>% 
   mutate(GDPbillions = X2016/1e9) %>% select(Country.Name, Medals, GDPbillions, GDP=X2016)
 
-#(plot1_3) 
+#(plot1_3) number of medals vs indices
+areaCountries <- area.df %>% select(Country.Name, NOC=Country.Code, X2016)
+populationCountries <- population.df  %>% select(NOC=Country.Code, X2016)
+gdpCapita <- gdpCapita.df  %>% select(NOC=Country.Code, X2016)
+educationGDP <- educationGDP.df  %>% select(NOC=Country.Code, X2016)
+mortalityRate <- mortalityRate.df  %>% select(NOC=Country.Code, X2016)
+gini <- gini.df  %>% select(NOC=Country.Code, X2016)
+
+plot1_3 <- inner_join(medalsCountries, areaCountries, by ="NOC") %>% 
+  select(1,2,3,4,Area=X2016) %>% inner_join(., populationCountries, by ="NOC") %>% 
+  select(1,2,3,Country.Name=4,5,Population=6) %>% inner_join(., gdpCapita, by ="NOC") %>% 
+  select(1,2,3,Country.Name=4,5,6,"GDP per capita"=7) %>% inner_join(., educationGDP, by ="NOC") %>%
+  select(1,2,3,Country.Name=4,5,6,7,"%GDP invested Education"=8) %>% inner_join(., mortalityRate, by ="NOC") %>%
+  select(1,2,3,Country.Name=4,5,6,7,8,"Mortality Rate"=9) %>% inner_join(., gini, by ="NOC") %>%
+  select(1,2,3,Country.Name=4,5,6,7,8,9,"GINI"=10) %>% 
+  filter(Year == 2016)
+
+
 
 #(plot2_1) rate of women athletes in the olympics every year
 # match the year of winter games with summer games to have a better graph
