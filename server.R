@@ -15,11 +15,14 @@ function(input, output) {
                     options=list(width=800, height=600))
   })
   
-  
-  
   output$plot2_1 <- renderGvis({
     gvisLineChart(plot2_1, xvar = "Year", yvar = c("Female", "Male"),
                   options=list(legend="{position: 'top', textStyle: {fontSize: 16}}",
                                hAxis="{format: '0000'}"))
   })
+  
+  output$plot2_2 <- renderGvis({
+    gvisGeoChart(plot2_2, locationvar="region", colorvar="GII")
+  })
+
 }
