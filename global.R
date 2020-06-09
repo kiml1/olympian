@@ -146,5 +146,3 @@ ggplot(plot3_5, aes(x=Year)) + geom_line(aes(y=`Average Age`, col=Sex))
 ggsave("./www/plots/plot3_5.png")
 
 
-
-

@@ -26,6 +26,7 @@
   </head>
   <body>
 
+<!--class="fixed-top"-->
     <header role="banner">
       <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
@@ -54,7 +55,7 @@
     <!-- END header -->
     
     <section class="home-slider owl-carousel">
-      <div class="slider-item" style="background-image: url('images/olympics_logo.png');">
+      <div class="slider-item" style="background-image: url('images/olympics_logos.png');">
         <div class="container">
           <div class="row slider-text align-items-center justify-content-center">
             <div class="col-md-10 text-center col-sm-12 element-animate">
@@ -71,22 +72,16 @@
     <section class="section bg-light">
       <div class="container">
         <div class="row">
-          <p>The Olympics games is an international sporting event featuring summer and winter sports 
-competitions in which thousands of athletes around the world compete in various competitions.
-The Olympic Games are considered the world's foremost sports competition with more than 200 
-nations participating. The Olympic Games are held every four years, alternating between the Summer and Winter
-Games every two years in the four-year period.
-Their creation was inspired by the ancient Olympic Games 
-(Ancient Greek: Ὀλυμπιακοί Ἀγῶνες), which were held in Olympia, Greece, from the 8th century BC to
-the 4th century AD. Baron Pierre de Coubertin founded the International Olympic Committee (IOC) in 1894, 
-leading to the first modern Games in Athens in 1896.
-In midst of the global pandemic of Coronavirus, for the first time in its history, the 
-Olympic Games Tokyo 2020 are posponed to the next year. Many and most of the athletes who secured a spot
-in Tokyo 2020 will now have to wait with an uncertainty of the games next year. The impacts of the postponement of the Olympic Games are really hard to measure especially for the athletes who train for most of their lives to this event.
-Besides hard work and talent, how much does it really take to become an Olympian?
-What comes into factor that separates an Olympian athlete to a non-Olympic level athlete?
-Does the background have a direct impact on a person aiming to compete at the Olympics?
-Let's try to find out.</p>
+          <img src="images/olympic_rings.png" width=30% height=30% class="rounded mx-auto d-block">
+          <p class="mt-5 text-center">The Olympics can be considered one of the most popular, prestigious and competitive sporting events in the world. Its symbol represents the union of the five continents of the world and the meeting of athletes from throughout the world at the Olympic Games. In midst of the global pandemic of Coronavirus in 2020, for the first time, the Olympic Games Tokyo 2020 are posponed. The impacts of the postponement of the Olympic Game s are really hard to measure especially for the athletes who train for most of their lives to this event. 
+<br><br>
+Despite having the idea of equality and fairness, getting an Olympic medal is not always just about talent.
+There are more than 70 countries that never won a medal and some that win more than 100 in a single event.
+<br><br>
+After all, why is there such a huge gap between winning and losing countries? How much does it really take to become an Olympian? What comes into factor that separates an Olympian athlete to a non-Olympic level athlete?
+Being born in a specific country or continen have a direct impact on a person aiming to compete at the highest level?
+<br><br>
+This application was made trying to find trends to determine what it really takes to be an Olympian Country Champion.</p>
         </div>
       </div>
     </section>
@@ -104,7 +99,8 @@ Let's try to find out.</p>
               </div>
               <h2 class="block-41-heading mb-5">Olympic Medals per country</h2>
               <div class="block-41-text">
-                <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+                <p>More than 70 countries have never won an Olympic medal. <br><br>
+                As of 2020, the number of medals won by continent are: <span style="color: #0085C7;">Europe (11711)</span>, <span style="color: #DF0024;">America (4036)</span>, <span style="color: #F4C300;">Asia (2024)</span>, <span style="color: #009F3D;">Oceania (649)</span>, <span style="color: #000000;">Africa (404)</span>.</p>
               </div>
             </div>
           </div>
@@ -115,9 +111,9 @@ Let's try to find out.</p>
             <div class="row align-items-center mb-5">
           <div class="col-md-5 pr-md-5 mb-5">
             <div class="block-41">
-              <h2 class="block-41-heading mb-5">GDP vs Medals</h2>
+              <h2 class="block-41-heading mb-5">GDP x Medals</h2>
               <div class="block-41-text">
-                <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+                <p>The top 10 medal earning countries in the 2016 Summer Olympics (Rio de Janeiro) were: USA, Great Britain, China, Russia, Germany, Japan, France, South Korea, Italy and Australia. All of them were in the <a href="https://data.worldbank.org/indicator/NY.GDP.MKTP.CD">top 14 economies of the world for the same year</a>.<br><br>The size of a nation's economy is commonly expressed as its Gross Domestic Product, or <b>GDP</b>, which measures the value of the output of all goods and services produced within the country in a year.</p>
               </div>
             </div>
           </div>
@@ -131,22 +127,22 @@ Let's try to find out.</p>
             <div class="block-41">
               <h2 class="block-41-heading mb-5">Indices vs Medals</h2>
               <div class="block-41-text">
-                <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+                <p>It is possible to expand the study of correlations between a country's success in the Olympics and its economy, demographics, infrainstructure and/or cultural aspects.</p>
+              </div>
+              <div class="form-group">
+                <label for="exampleFormControlSelect1">Select what to compare</label>
+                <select class="form-control" name="indices">
+                  <option value="Area">Area (surface area, sq. km)</option>
+                  <option value="Population">Population (total)</option>
+                  <option value="GDP per capita">GDP per capita (GDP PPP, $)</option>
+                  <!--<option value="%GDP invested Education">% of GDP invested in Education</option>-->
+                  <option value="Mortality Rate">Mortality Rate (per 1,000 live births)</option>
+                  <option value="GINI">GINI (World Bank Estimate)</option>
+                </select>
               </div>
             </div>
           </div>
           <div class="col-md-7">
-            <div class="form-group">
-              <label for="exampleFormControlSelect1">Select indice to compare</label>
-              <select class="form-control" name="indices">
-                <option value="Area">Area</option>
-                <option value="Population">Population</option>
-                <option value="GDP per capita">GDP per capita</option>
-                <!--<option value="%GDP invested Education">% of GDP invested in Education</option>-->
-                <option value="Mortality Rate">Mortality Rate</option>
-                <option value="GINI">GINI</option>
-              </select>
-            </div>
             <div id="plot1_3" class="shiny-html-output"></div>
           </div>
         </div>
