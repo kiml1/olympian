@@ -93,7 +93,6 @@ This application was made trying to find trends to determine what it really take
           <div class="col-md-5 pr-md-5 mb-5">
             <div class="block-41">
               <div class="block-41-subheading d-flex">
-                <div class="block-41-number"></div>
                 <div class="block-41-line align-self-center mx-2"></div>
                 <div class="block-41-subheading-2">Country Performance</div>
               </div>
@@ -125,7 +124,7 @@ This application was made trying to find trends to determine what it really take
         <div class="row align-items-center mb-5">
           <div class="col-md-5 pr-md-5 mb-5">
             <div class="block-41">
-              <h2 class="block-41-heading mb-5">Indices vs Medals</h2>
+              <h2 class="block-41-heading mb-5">Indices x Medals</h2>
               <div class="block-41-text">
                 <p>It is possible to expand the study of correlations between a country's success in the Olympics and its economy, demographics, infrainstructure and/or cultural aspects.</p>
               </div>
@@ -153,12 +152,10 @@ This application was made trying to find trends to determine what it really take
 
     <section class="section element-animate bg-light">
       <div class="container">
-        
         <div class="row align-items-center mb-5">
           <div class="col-md-5 pl-md-5 mb-5 order-md-2">
             <div class="block-41">
               <div class="block-41-subheading d-flex">
-                <div class="block-41-number"></div>
                 <div class="block-41-line align-self-center mx-2"></div>
                 <div class="block-41-subheading-2">Women in the Olympics</div>
               </div>
@@ -169,21 +166,24 @@ This application was made trying to find trends to determine what it really take
             </div>
           </div>
           <div class="col-md-7 order-md-1">
-            <div id="plot2_1" class="shiny-html-output"></div>
+             <img src="plots/plot2_1.png" alt="Image" class="img-fluid">
           </div> 
         </div>
-        
+      </div>
+      
+      <div class="container">
         <div class="row align-items-center mb-5">
           <div class="col-md-5 pl-md-5 mb-5 order-md-2">
             <div class="block-41">
               <h2 class="block-41-heading mb-5">GII</h2>
               <div class="block-41-text">
-                <p>The Gender Inequality Index (GII) is an index for measurement of gender disparity.According to the UNDP, this index is a composite measure to quantify the loss of achievement within a country due to gender inequality. It uses three dimensions to measure opportunity cost: reproductive health, empowerment, and labor market participation.</p>
+                <p><a href="http://hdr.undp.org/en/content/gender-inequality-index-gii#:~:text=It%20measures%20the%20human%20development,major%20areas%20of%20human%20development.">The Gender Inequality Index (GII)</a> is an index for measurement of gender disparity. According to the UNDP, this index is a composite measure to quantify the loss of achievement within a country due to gender inequality. It uses three dimensions to measure opportunity cost: reproductive health, empowerment, and labor market participation.<br><br>
+It ranges from 0, where women and men fare equally, to 1, where one gender fares as poorly as possible in all measured dimensions.</p>
               </div>
             </div>
           </div>
           <div class="col-md-7 order-md-1">
-            <div id="plot2_2" class="shiny-html-output"></div>
+            <div id="plot2_2" class="shiny-html-output container-fluid"></div>
           </div> 
         </div>
         
@@ -192,7 +192,7 @@ This application was made trying to find trends to determine what it really take
             <div class="block-41">
               <h2 class="block-41-heading mb-5">Ratio of Women Athletes & GII</h2>
               <div class="block-41-text">
-                <p>The Gender Inequality Index (GII) is an index for measurement of gender disparity.According to the UNDP, this index is a composite measure to quantify the loss of achievement within a country due to gender inequality. It uses three dimensions to measure opportunity cost: reproductive health, empowerment, and labor market participation.</p>
+                <p>The ratio of women athletes was calculated by the number of women athletes divided by the total number of athletes for each country in 2016. It aimed to find a correlation between countries which have a high/low  rate of women competitors and the gender equality/inequality.</p>
               </div>
             </div>
           </div>
@@ -206,68 +206,120 @@ This application was made trying to find trends to determine what it really take
      <section class="section element-animate">
       <div class="container">
         <div class="row align-items-center mb-5">
-          <div class="col-md-5 pr-md-5 mb-5">
+          <div class="col-md-12 pr-md-5 mb-5">
             <div class="block-41">
               <div class="block-41-subheading d-flex">
                 <div class="block-41-number"></div>
                 <div class="block-41-line align-self-center mx-2"></div>
                 <div class="block-41-subheading-2">Physical Characteristics</div>
               </div>
-              <h2 class="block-41-heading mb-5">Height</h2>
+              <h2 class="block-41-heading mb-5">Height & Weight</h2>
               <div class="block-41-text">
-                <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+                <p>In almost every Olympic event, it is common to see athletes breaking records after records from previous editions. Is there a reason behind that? Are athletes getting fitter every year?</p>
               </div>
             </div>
-          </div>
-          <div class="col-md-7">
-             <img src="plots/plot3_1.png" alt="Image" class="img-fluid">
           </div>
         </div>
         
-            <div class="row align-items-center mb-5">
-          <div class="col-md-5 pr-md-5 mb-5">
-            <div class="block-41">
-              <h2 class="block-41-heading mb-5">Weight</h2>
-              <div class="block-41-text">
-                <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
-              </div>
-            </div>
+        <div class="row align-items-center mb-5">
+          <div class="col-md-6">
+             <img src="plots/plot3_1.png" alt="Image" class="img-fluid">
           </div>
-          <div class="col-md-7">
+          <div class="col-md-6">
              <img src="plots/plot3_2.png" alt="Image" class="img-fluid">
           </div>
         </div>
         
-                    <div class="row align-items-center mb-5">
-          <div class="col-md-5 pr-md-5 mb-5">
+        <div class="row align-items-center mb-5">
+          <div class="col-md-12 pr-md-5 mb-5">
             <div class="block-41">
-              <h2 class="block-41-heading mb-5">Height vs Weight Men</h2>
+              <h2 class="block-41-heading mb-5">Weight & Height in Athletics</h2>
               <div class="block-41-text">
-                <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+                <p></p>
               </div>
             </div>
           </div>
-          <div class="col-md-7">
+        <div class="row align-items-center mb-5">
+          <div class="col-md-6">
              <img src="plots/plot3_3.png" alt="Image" class="img-fluid">
           </div>
-        </div>
-        
-                    <div class="row align-items-center mb-5">
-          <div class="col-md-5 pr-md-5 mb-5">
-            <div class="block-41">
-              <h2 class="block-41-heading mb-5">Height vs Weight Women</h2>
-              <div class="block-41-text">
-                <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-7">
+          <div class="col-md-6">
              <img src="plots/plot3_4.png" alt="Image" class="img-fluid">
           </div>
         </div>
-      
+        </div>
+        
+        <div class="row align-items-center mb-5">
+          <div class="col-md-5 pr-md-5 mb-5">
+            <div class="block-41">
+              <h2 class="block-41-heading mb-5">Age</h2>
+              <div class="block-41-text">
+                <p>Age takes an immportant factor in an athlete's life. Age changes how our bodies use oxygen. With age, bones tend to shrink in size and density, weakening them and making them more susceptible to fracture. Muscles generally lose strength, endurance and flexibility. The way body burns calories (metabolism) slows down with age.<br><br>The line graph was plotted getting the average age for men and women across the Olympic events and the average life expectancy in the world.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-7">
+             <img src="plots/plot3_5.png" alt="Image" class="img-fluid">
+          </div>
+        </div>
+        
       </div>
     </section>
+    
+    <section class="section element-animate bg-light">
+      <div class="container">
+        <div class="row align-items-center mb-5">
+          <div class="col-md-5 pl-md-5 mb-5 order-md-2">
+            <div class="block-41">
+              <div class="block-41-subheading d-flex">
+                <div class="block-41-line align-self-center mx-2"></div>
+                <div class="block-41-subheading-2">Host Country</div>
+              </div>
+              <h2 class="block-41-heading mb-5">Home Advantage</h2>
+              <div class="block-41-text">
+                <p>The first participation of women in the Olympics was in 1900. Twenty-two women (2.2%) out of a total of 997 athletes competed in five sports. The number of female athletes has been increasing since then.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-7 order-md-1">
+             <div id="table" class="shiny-table-output"></div>
+          </div> 
+        </div>
+      </div>
+      
+      <div class="container">
+        <div class="row align-items-center mb-5">
+          <div class="col-md-5 pl-md-5 mb-5 order-md-2">
+            <div class="block-41">
+              <h2 class="block-41-heading mb-5">GII</h2>
+              <div class="block-41-text">
+                <p><a href="http://hdr.undp.org/en/content/gender-inequality-index-gii#:~:text=It%20measures%20the%20human%20development,major%20areas%20of%20human%20development.">The Gender Inequality Index (GII)</a> is an index for measurement of gender disparity. According to the UNDP, this index is a composite measure to quantify the loss of achievement within a country due to gender inequality. It uses three dimensions to measure opportunity cost: reproductive health, empowerment, and labor market participation.<br><br>
+It ranges from 0, where women and men fare equally, to 1, where one gender fares as poorly as possible in all measured dimensions.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-7 order-md-1">
+            <div id="plot2_2" class="shiny-html-output container-fluid"></div>
+          </div> 
+        </div>
+        
+        <div class="row align-items-center mb-5">
+          <div class="col-md-5 pl-md-5 mb-5 order-md-2">
+            <div class="block-41">
+              <h2 class="block-41-heading mb-5">Ratio of Women Athletes & GII</h2>
+              <div class="block-41-text">
+                <p>The ratio of women athletes was calculated by the number of women athletes divided by the total number of athletes for each country in 2016. It aimed to find a correlation between countries which have a high/low  rate of women competitors and the gender equality/inequality.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-7 order-md-1">
+            <img src="plots/plot2_3.png" alt="Image" class="img-fluid">
+          </div> 
+        </div>
+      </div>
+    </section>    
+    
     
     
 

@@ -14,7 +14,6 @@ function(input, output) {
                                  colorAxis="{colors:['black']}"))
   })
   
-
   output$plot1_3 <- renderGvis({
     gvisBubbleChart(plot1_3, idvar = "Country.Name", xvar = "Medals", yvar = input$indices, 
                     colorvar=input$indices, sizevar = input$indices,
@@ -23,14 +22,12 @@ function(input, output) {
                                  colorAxis="{legend:{position:'none'}, colors:['black']}"))
   })
   
-  output$plot2_1 <- renderGvis({
-    gvisLineChart(plot2_1, xvar = "Year", yvar = c("Female", "Male"),
-                  options=list(legend="{position: 'top', textStyle: {fontSize: 16}}",
-                               hAxis="{format: '0000'}"))
+  output$plot2_2 <- renderGvis({
+    gvisGeoChart(plot2_2, locationvar="region", colorvar="GII",
+                 options=list(colorAxis="{colors:['white', '#DF0024']}",
+                              backgroundColor= '#f8f9fa'))
   })
   
-  output$plot2_2 <- renderGvis({
-    gvisGeoChart(plot2_2, locationvar="region", colorvar="GII")
-  })
+  output$table <- renderDataTable(iris)
 
 }
