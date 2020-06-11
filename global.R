@@ -105,21 +105,35 @@ plot2_3 <- athlete_regions.df %>% mutate(Year = ifelse(Year == 1994, 1996,
                                                 ifelse(Year == 2014, 2016, Year))))))) %>% 
   group_by(Year, region, Sex) %>% summarise("Number Athletes" = length(unique(ID)))
 #calculate the ratio and set-up factor levels for ggplot
-plot2_3 <- dcast(setDT(plot2_3), Year + region ~ Sex, fun.aggregate = sum, value.var = "Number Athletes") %>% 
-  mutate(ratio = F/(F+M)) %>% filter(Year == 2016) %>% select(region, ratio)
+plot2_3 <-
+  dcast(setDT(plot2_3),
+        Year + region ~ Sex,
+        fun.aggregate = sum,
+        value.var = "Number Athletes") %>%
+  mutate(ratio = F / (F + M)) %>% filter(Year == 2016) %>% select(region, ratio)
 level2_3 <- plot2_3 %>% arrange(ratio) %>% select(region)
-plot2_3$region <- factor(plot2_3$region, levels = c(level2_3$region))
+plot2_3$region <-
+  factor(plot2_3$region, levels = c(level2_3$region))
 #filter for unwanted values in gii column
-gii2016 <- gii.df %>% filter(X2016 != "..", X2016 != "") %>% select(region, X2016)
+gii2016 <-
+  gii.df %>% filter(X2016 != "..", X2016 != "") %>% select(region, X2016)
 gii2016$X2016 <- as.numeric(gii2016$X2016)
 #join ratio and gii tables
-plot2_3 <- inner_join(plot2_3, gii2016 %>% select(region, GII=X2016), by="region")
-plot2_3 <- plot2_3 %>% select(ratio,GII)
+plot2_3 <-
+  inner_join(plot2_3, gii2016 %>% select(region, GII = X2016), by = "region")
+plot2_3 <- plot2_3 %>% select(ratio, GII)
 #plot and save graph
-ggplot(plot2_3, aes(x=ratio,y=GII)) + 
-  geom_point(shape=23, fill="#DF0024", color="#DF0024", size=3) +
-  theme(panel.background = element_rect(fill = "#f8f9fa"),
-        plot.background = element_rect(fil = "#f8f9fa"))
+ggplot(plot2_3, aes(x = ratio, y = GII)) +
+  geom_point(
+    shape = 23,
+    fill = "#DF0024",
+    color = "#DF0024",
+    size = 3
+  ) +
+  theme(
+    panel.background = element_rect(fill = "#f8f9fa"),
+    plot.background = element_rect(fil = "#f8f9fa")
+  )
 ggsave("./www/plots/plot2_3.png")
 
 #---------------------------------------------------------------------------------------------------------#
@@ -133,11 +147,13 @@ plot3_1 <- athlete_events.df %>% mutate(Year = ifelse(Year == 1994, 1996,
                                                ifelse(Year == 2010, 2012,
                                                ifelse(Year == 2014, 2016, Year))))))) %>% filter(!is.na(Height), Year >= 1936)
 #plot and save graph
-ggplot(plot3_1, aes(x = as.factor(Year), y = Height, fill = Sex)) + 
+ggplot(plot3_1, aes(x = as.factor(Year), y = Height, fill = Sex)) +
   geom_boxplot() +
-  theme(panel.background = element_rect(fill = "white"),
-        plot.background = element_rect(fil = "white")) +
-  labs(x="Year", y="Height (meters)", title = "Median height each Olympic event")
+  theme(
+    panel.background = element_rect(fill = "white"),
+    plot.background = element_rect(fil = "white")
+  ) +
+  labs(x = "Year", y = "Height (meters)", title = "Median height each Olympic event")
 ggsave("./www/plots/plot3_1.png")
 
 #---------------------------------------------------------------------------------------------------------#
@@ -151,17 +167,20 @@ plot3_2 <- athlete_events.df %>% mutate(Year = ifelse(Year == 1994, 1996,
                                                ifelse(Year == 2010, 2012,
                                                ifelse(Year == 2014, 2016, Year))))))) %>% filter(!is.na(Weight), Year >= 1936)
 #plot and save graph
-ggplot(plot3_2, aes(x = as.factor(Year), y = Weight, fill = Sex)) + 
+ggplot(plot3_2, aes(x = as.factor(Year), y = Weight, fill = Sex)) +
   geom_boxplot() +
-  theme(panel.background = element_rect(fill = "white"),
-        plot.background = element_rect(fil = "white")) +
-  labs(x="Year", y="Weight (kg)", title = "Median weight each Olympic event")
+  theme(
+    panel.background = element_rect(fill = "white"),
+    plot.background = element_rect(fil = "white")
+  ) +
+  labs(x = "Year", y = "Weight (kg)", title = "Median weight each Olympic event")
 ggsave("./www/plots/plot3_2.png")
 
 #---------------------------------------------------------------------------------------------------------#
 
 #(plot3_3) scatterplot of heightxweight for men in athletics
-scatterHxW <- athlete_events.df %>% filter(!is.na(Weight)) %>% filter(!is.na(Height)) %>% filter(Year %in% c(1968,2016))
+scatterHxW <-
+  athlete_events.df %>% filter(!is.na(Weight)) %>% filter(!is.na(Height)) %>% filter(Year %in% c(1968, 2016))
 #get rid of duplicates athletes using distinct
 scatterHxW <- distinct(scatterHxW, ID, .keep_all = TRUE)
 #to get a better plot visualization, change the column Year to class character
@@ -169,11 +188,14 @@ scatterHxW$Year <- as.character(scatterHxW$Year)
 #finally, filter to men only
 plot3_3 <- scatterHxW %>% filter(Sex == "M")
 #plot and save graph
-ggplot(plot3_3 %>% filter(Sport == "Athletics"), aes(x=Weight, y=Height)) + 
-  geom_point(aes(col=Year)) +
-  theme(panel.background = element_rect(fill = "white"),
-        plot.background = element_rect(fil = "white")) +
-  labs(x="Weight (kg)", y="Height (m)", title = "Men Weight x Height in Athletics")
+ggplot(plot3_3 %>% filter(Sport == "Athletics"),
+       aes(x = Weight, y = Height)) +
+  geom_point(aes(col = Year)) +
+  theme(
+    panel.background = element_rect(fill = "white"),
+    plot.background = element_rect(fil = "white")
+  ) +
+  labs(x = "Weight (kg)", y = "Height (m)", title = "Men Weight x Height in Athletics")
 ggsave("./www/plots/plot3_3.png")
 
 #---------------------------------------------------------------------------------------------------------#
@@ -181,11 +203,14 @@ ggsave("./www/plots/plot3_3.png")
 #(plot3_4) scatterplot of heightxweight for women in athletics
 #we can use most of the work done for plat3_3 and just filter for women
 plot3_4 <- scatterHxW %>% filter(Sex == "F")
-ggplot(plot3_4 %>% filter(Sport == "Athletics"), aes(x=Weight, y=Height)) + 
-  geom_point(aes(col=Year)) +
-  theme(panel.background = element_rect(fill = "white"),
-        plot.background = element_rect(fil = "white")) +
-  labs(x="Weight (kg)", y="Height (m)", title = "Women Weight x Height in Athletics")
+ggplot(plot3_4 %>% filter(Sport == "Athletics"),
+       aes(x = Weight, y = Height)) +
+  geom_point(aes(col = Year)) +
+  theme(
+    panel.background = element_rect(fill = "white"),
+    plot.background = element_rect(fil = "white")
+  ) +
+  labs(x = "Weight (kg)", y = "Height (m)", title = "Women Weight x Height in Athletics")
 ggsave("./www/plots/plot3_4.png")
 
 #---------------------------------------------------------------------------------------------------------#
@@ -197,41 +222,89 @@ plot3_5 <- athlete_regions.df %>% mutate(Year = ifelse(Year == 1994, 1996,
                                                 ifelse(Year == 2006, 2008,
                                                 ifelse(Year == 2010, 2012,
                                                 ifelse(Year == 2014, 2016, Year))))))) %>% 
-  filter(!is.na(Age)) %>% group_by(Sex, Year) %>% summarise("Average Age" = mean(Age)) %>% 
+  filter(!is.na(Age)) %>% group_by(Sex, Year) %>% summarise("Average Age" = mean(Age)) %>%
   rename(., Category = Sex)
 #get average life expectancy from each year
-lifeExpectancyWorldAvg <- data.frame(as.list(colMeans(lifeExpectancy.df[,5:65], na.rm=TRUE))) %>% 
-  tidyr::gather(., "Year", "lifeExpAvg") %>% mutate(Year = as.numeric(gsub('X', '', Year))) %>% 
+lifeExpectancyWorldAvg <-
+  data.frame(as.list(colMeans(lifeExpectancy.df[, 5:65], na.rm = TRUE))) %>%
+  tidyr::gather(., "Year", "lifeExpAvg") %>% mutate(Year = as.numeric(gsub('X', '', Year))) %>%
   mutate(Category = c("World")) %>% rename(., "Average Age" = lifeExpAvg) %>% filter(Year <= 2018)
 #join the 2 dfs to make plot
 plot3_5 <- rbind(plot3_5, lifeExpectancyWorldAvg)
 #plot and save graph
-ggplot(plot3_5, aes(x=Year)) + 
-  geom_line(aes(y=`Average Age`, col=Category)) +
-  theme(panel.background = element_rect(fill = "white"),
-        plot.background = element_rect(fil = "white"))
+ggplot(plot3_5, aes(x = Year)) +
+  geom_line(aes(y = `Average Age`, col = Category)) +
+  theme(
+    panel.background = element_rect(fill = "white"),
+    plot.background = element_rect(fil = "white")
+  )
 ggsave("./www/plots/plot3_5.png")
 
 #---------------------------------------------------------------------------------------------------------#
 
-#(table4_1) medals host country summer olympics
-medalsCountries <- medalsCountries %>% inner_join(., noc_regions.df, by="NOC") %>% select(Year, Medals, Country = region) %>% 
-  mutate(Country = ifelse(Country == "USA", "United States", Country)) %>% 
+#(plot4_1) how many times each country has hosted
+summerOlympics <- athlete_events.df %>% distinct(., Games, .keep_all=TRUE) %>% select(Year, City, Season) %>% 
+  filter(Season == "Summer") %>% group_by(Year) %>% mutate(Count = 1)
+
+#had to create a relational table city-country because the dataset did not provide
+citiesSummer <- (summerOlympics %>% arrange(Year))$City
+countriesSummer <- c("Greece","France","United States","Greece","United Kingdom","Sweden","Belgium","France",
+               "Netherlands","United States","Germany","United Kingdom","Finland","Australia","Italy",
+               "Japan","Mexico","Germany","Canada","Russia","United States","South Korea","Spain",
+               "United States","Australia","Greece","China","United Kingdom","Brazil")
+
+summer <- data.frame(citiesSummer, countriesSummer) %>% group_by(countriesSummer) %>% 
+  summarise(Count=n()) %>% rename(., Country = countriesSummer)
+
+
+winterOlympics <- athlete_events.df %>% distinct(., Games, .keep_all=TRUE) %>% select(Year, City, Season) %>% 
+  filter(Season == "Winter") %>% group_by(Year) %>% mutate(Count = 1)
+
+#had to create a relational table city-country because the dataset did not provide
+citiesWinter <- (winterOlympics %>% arrange(Year))$City
+countriesWinter <- c("France","Switzerland","United States","Germany","Switzerland","Norway","Italy",
+                     "United States","Austria","France","Japan","Austria","United States","Yugoslavia",
+                     "Canada","France","Norway","Japan","United States","Italy","Canada","Russia")
+
+winter <- data.frame(citiesWinter, countriesWinter) %>% group_by(countriesWinter) %>% 
+  summarise(Count=n()) %>% rename(., Country = countriesWinter)
+
+#---------------------------------------------------------------------------------------------------------#
+
+#(table4_2) medals host country summer olympics
+medalsCountries <-
+  medalsCountries %>% inner_join(., noc_regions.df, by = "NOC") %>% select(Year, Medals, Country = region) %>%
+  mutate(Country = ifelse(Country == "USA", "United States", Country)) %>%
   mutate(Country = ifelse(Country == "UK", "United Kingdom", Country))
-medalsCountries <- medalsCountries %>% mutate("code" = paste0(Year,Country))
+medalsCountries <-
+  medalsCountries %>% mutate("code" = paste0(Year, Country))
 
-summerHost <- strsplit("Greece,France,United States,United Kingdom,Sweden,Cancelled,Belgium,France,Netherlands,United States,Germany,Cancelled,Cancelled,United Kingdom,Finland,Australia,Italy,Japan,Mexico,Germany,Canada,Russia,United States,South Korea,Spain,United States,Australia,Greece,China,United Kingdom,Brazil", split=',')
-summerOlympicsHosts <- data.frame(Year = seq(1896,2016,4), summerHost)
-summerOlympicsHosts <- rename(summerOlympicsHosts, "Country" = colnames(summerOlympicsHosts)[2])  
-summerOlympicsHosts <- summerOlympicsHosts %>% mutate("code" = paste0(Year,Country))
+summerHost <-
+  strsplit(
+    "Greece,France,United States,United Kingdom,Sweden,Cancelled,Belgium,France,Netherlands,United States,Germany,Cancelled,Cancelled,United Kingdom,Finland,Australia,Italy,Japan,Mexico,Germany,Canada,Russia,United States,South Korea,Spain,United States,Australia,Greece,China,United Kingdom,Brazil",
+    split = ','
+  )
+summerOlympicsHosts <-
+  data.frame(Year = seq(1896, 2016, 4), summerHost)
+summerOlympicsHosts <-
+  rename(summerOlympicsHosts, "Country" = colnames(summerOlympicsHosts)[2])
+summerOlympicsHosts <-
+  summerOlympicsHosts %>% mutate("code" = paste0(Year, Country))
 #get medals for each hosting country
-table4_1 <- right_join(medalsCountries, summerOlympicsHosts, by="code") %>% ungroup() %>% select(Year=Year.x, Country=Country.x, Medals)
+table4_2 <-
+  right_join(medalsCountries, summerOlympicsHosts, by = "code") %>% ungroup() %>% select(Year =
+                                                                                           Year.x, Country = Country.x, Medals)
 #now get medals from the previous year for comparison
-table4_1 <- table4_1 %>% mutate("code" = paste0(Year-4,Country)) %>% filter(!is.na(Country))
-table4_1 <- inner_join(table4_1, medalsCountries, by="code") %>% ungroup() %>% mutate("Change"=Medals.x-Medals.y) %>% 
-  select(Country=Country.x, Year=Year.x,"Previous Games"=Medals.y,"Host Year"=Medals.x, Change)
-
-
-
-
+table4_2 <-
+  table4_2 %>% mutate("code" = paste0(Year - 4, Country)) %>% filter(!is.na(Country))
+table4_2 <-
+  inner_join(table4_2, medalsCountries, by = "code") %>% ungroup() %>% mutate("Change" =
+                                                                                Medals.x - Medals.y) %>%
+  select(
+    Country = Country.x,
+    Year = Year.x,
+    "Previous Games" = Medals.y,
+    "Host Year" = Medals.x,
+    Change
+  )
 

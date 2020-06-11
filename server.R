@@ -28,6 +28,20 @@ function(input, output) {
                               backgroundColor= '#f8f9fa'))
   })
   
-  output$table <- renderDataTable(iris)
-
+  
+  output$plot4_1 <- renderGvis({
+    if(input$season=="summer") {
+      plot4_1 = summer
+      options = list(colorAxis="{colors:['#ff4d6a', '#b3001e']}",
+                   backgroundColor= '#f8f9fa')
+    } else {
+        plot4_1 = winter
+        options = list(colorAxis="{colors:['#4dc3ff', '#0077b3']}",
+                     backgroundColor= '#f8f9fa')
+    }
+    
+    gvisGeoChart(plot4_1, locationvar="Country", colorvar="Count",
+                 options=options)
+  })
+  
 }

@@ -183,7 +183,7 @@ It ranges from 0, where women and men fare equally, to 1, where one gender fares
             </div>
           </div>
           <div class="col-md-7 order-md-1">
-            <div id="plot2_2" class="shiny-html-output container-fluid"></div>
+            <div id="plot2_2" class="shiny-html-output"></div>
           </div> 
         </div>
         
@@ -267,15 +267,42 @@ It ranges from 0, where women and men fare equally, to 1, where one gender fares
       </div>
     </section>
     
+    
+     
     <section class="section element-animate bg-light">
       <div class="container">
+        
         <div class="row align-items-center mb-5">
-          <div class="col-md-5 pl-md-5 mb-5 order-md-2">
+          <div class="col-md-5 pr-md-5 mb-5 order-md-2">
             <div class="block-41">
               <div class="block-41-subheading d-flex">
                 <div class="block-41-line align-self-center mx-2"></div>
                 <div class="block-41-subheading-2">Host Country</div>
               </div>
+              <h2 class="block-41-heading mb-5">Olympic Games by Country</h2>
+              <div class="block-41-text">
+                <p>African continent never held any Olympic games.</p>
+              </div>
+              <div class="form-group">
+                <label for="exampleFormControlSelect1">Select Olympics Edition</label>
+                <select class="form-control" name="season">
+                  <option value="summer">Summer Games</option>
+                  <option value="winter">Winter Games</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-7 order-md-1">
+             <div id="plot4_1" class="shiny-html-output"></div>
+          </div>
+        </div>
+        
+      
+        
+        
+        <div class="row align-items-center mb-5">
+          <div class="col-md-5 pl-md-5 mb-5 order-md-2">
+            <div class="block-41">
               <h2 class="block-41-heading mb-5">Home Advantage</h2>
               <div class="block-41-text">
                 <p>The first participation of women in the Olympics was in 1900. Twenty-two women (2.2%) out of a total of 997 athletes competed in five sports. The number of female athletes has been increasing since then.</p>
@@ -283,38 +310,75 @@ It ranges from 0, where women and men fare equally, to 1, where one gender fares
             </div>
           </div>
           <div class="col-md-7 order-md-1">
-             <div id="table" class="shiny-table-output"></div>
-          </div> 
-        </div>
-      </div>
-      
-      <div class="container">
-        <div class="row align-items-center mb-5">
-          <div class="col-md-5 pl-md-5 mb-5 order-md-2">
-            <div class="block-41">
-              <h2 class="block-41-heading mb-5">GII</h2>
-              <div class="block-41-text">
-                <p><a href="http://hdr.undp.org/en/content/gender-inequality-index-gii#:~:text=It%20measures%20the%20human%20development,major%20areas%20of%20human%20development.">The Gender Inequality Index (GII)</a> is an index for measurement of gender disparity. According to the UNDP, this index is a composite measure to quantify the loss of achievement within a country due to gender inequality. It uses three dimensions to measure opportunity cost: reproductive health, empowerment, and labor market participation.<br><br>
-It ranges from 0, where women and men fare equally, to 1, where one gender fares as poorly as possible in all measured dimensions.</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-7 order-md-1">
-            <div id="plot2_2" class="shiny-html-output container-fluid"></div>
-          </div> 
-        </div>
-        
-        <div class="row align-items-center mb-5">
-          <div class="col-md-5 pl-md-5 mb-5 order-md-2">
-            <div class="block-41">
-              <h2 class="block-41-heading mb-5">Ratio of Women Athletes & GII</h2>
-              <div class="block-41-text">
-                <p>The ratio of women athletes was calculated by the number of women athletes divided by the total number of athletes for each country in 2016. It aimed to find a correlation between countries which have a high/low  rate of women competitors and the gender equality/inequality.</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-7 order-md-1">
-            <img src="plots/plot2_3.png" alt="Image" class="img-fluid">
+             <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Country</th>
+      <th scope="col">Year</th>
+      <th scope="col">Previous Olympics</th>
+      <th scope="col">Host Olympics</th>
+      <th scope="col">Differene</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">South Korea</th>
+      <td>1988</td>
+      <td>18</td>
+      <td>30</td>
+      <td class="text-success">12</td>
+    </tr>
+    <tr>
+      <th scope="row">Spain</th>
+      <td>1992</td>
+      <td>4</td>
+      <td>23</td>
+      <td class="text-success">19</td>
+    </tr>
+    <tr>
+      <th scope="row">United States</th>
+      <td>1996</td>
+      <td>107</td>
+      <td>89</td>
+      <td class="text-danger">-18</td>
+    </tr>
+    <tr>
+      <th scope="row">Australia</th>
+      <td>2000</td>
+      <td>39</td>
+      <td>55</td>
+      <td class="text-success">16</td>
+    </tr>
+    <tr>
+      <th scope="row">Greece</th>
+      <td>2004</td>
+      <td>13</td>
+      <td>16</td>
+      <td class="text-success">3</td>
+    </tr>
+    <tr>
+      <th scope="row">China</th>
+      <td>2008</td>
+      <td>55</td>
+      <td>85</td>
+      <td class="text-success">30</td>
+    </tr>
+    <tr>
+      <th scope="row">United Kingdom</th>
+      <td>2012</td>
+      <td>42</td>
+      <td>60</td>
+      <td class="text-success">18</td>
+    </tr>
+    <tr>
+      <th scope="row">Brazil</th>
+      <td>2016</td>
+      <td>17</td>
+      <td>18</td>
+      <td class="text-success">1</td>
+    </tr>
+  </tbody>
+</table>
           </div> 
         </div>
       </div>
