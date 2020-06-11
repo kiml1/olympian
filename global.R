@@ -1,12 +1,9 @@
 #### libraries ####
 library(shiny)
-library(shinythemes)
-library(shinyWidgets)
 library(googleVis)
 library(data.table)
 library(tidyverse)
 library(ggplot2)
-library(reactable)
 
 #### data set ####
 athlete_events.df <- read.csv("./dataset/athlete_events.csv")
@@ -229,8 +226,6 @@ lifeExpectancyWorldAvg <-
   data.frame(as.list(colMeans(lifeExpectancy.df[, 5:65], na.rm = TRUE))) %>%
   tidyr::gather(., "Year", "lifeExpAvg") %>% mutate(Year = as.numeric(gsub('X', '', Year))) %>%
   mutate(Category = c("World")) %>% rename(., "Average Age" = lifeExpAvg) %>% filter(Year <= 2018)
-#join the 2 dfs to make plot
-plot3_5 <- rbind(plot3_5, lifeExpectancyWorldAvg)
 #plot and save graph
 ggplot(plot3_5, aes(x = Year)) +
   geom_line(aes(y = `Average Age`, col = Category)) +

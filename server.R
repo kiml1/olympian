@@ -11,7 +11,7 @@ function(input, output) {
                                  title="GDP x Medal Count", 
                                  hAxis="{title:'Total Medal Count'}",
                                  vAxis="{title:'GDP'}",
-                                 colorAxis="{colors:['black']}"))
+                                 colorAxis="{colors:['#0085C7']}"))
   })
   
   output$plot1_3 <- renderGvis({
@@ -19,7 +19,7 @@ function(input, output) {
                     colorvar=input$indices, sizevar = input$indices,
                     options=list(width=800, height=600,
                                  hAxis="{title:'Total Medal Count'}",
-                                 colorAxis="{legend:{position:'none'}, colors:['black']}"))
+                                 colorAxis="{legend:{position:'none'}, colors:['#0085C7']}"))
   })
   
   output$plot2_2 <- renderGvis({
@@ -33,13 +33,12 @@ function(input, output) {
     if(input$season=="summer") {
       plot4_1 = summer
       options = list(colorAxis="{colors:['#ff4d6a', '#b3001e']}",
-                   backgroundColor= '#f8f9fa')
+                   backgroundColor= '#f8f9fa', width=800, height=600)
     } else {
         plot4_1 = winter
         options = list(colorAxis="{colors:['#4dc3ff', '#0077b3']}",
-                     backgroundColor= '#f8f9fa')
+                     backgroundColor= '#f8f9fa', width=800, height=600)
     }
-    
     gvisGeoChart(plot4_1, locationvar="Country", colorvar="Count",
                  options=options)
   })
