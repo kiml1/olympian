@@ -1,12 +1,12 @@
 name: olympian
-title: olympian
+title:
 username:
 account: kiml1
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 2434583
-bundleId: 3256198
+bundleId: 3258271
 url: https://kiml1.shinyapps.io/olympian/
-when: 1591866231.02495
+when: 1591900741.57348
 asMultiple: FALSE
 asStatic: FALSE
