@@ -21,6 +21,13 @@ Shiny app UI was made in <b>JavaScript</b>, <b>HTML</b> and <b>CSS</b>. Template
 
 ---
 
+## Versions / bugs
+
+- [2020-06-11] Inconsistent API calls from Google charts causing problems to render graphs/plots.
+- Temporary fix: convert graphs and plots to png images. Dropdown lists graphs will not work with this fix.
+
+---
+
 ## License
 
 [![License](http://img.shields.io/:license-mit-blue.svg?style=flat-square)](http://badges.mit-license.org)
