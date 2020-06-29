@@ -128,20 +128,22 @@ This application was made trying to find trends to determine what it really take
               </div>
               <div class="form-group">
                 <label for="exampleFormControlSelect1">Select what to compare</label>
-                <select class="form-control" name="indices">
-                  <!-- <option value="Area">Area (surface area, sq. km)</option> -->
-                  <option value="Population">Population (total)</option>
-                  <option value="GDP per capita">GDP per capita (GDP PPP, $)</option>
-                  <!--<option value="%GDP invested Education">% of GDP invested in Education</option>-->
-                  <option value="Mortality Rate">Mortality Rate (per 1,000 live births)</option>
-                  <option value="GINI">GINI (World Bank Estimate)</option>
-                </select>
+                  
+                  <select onchange="document.getElementById('preview').src = this.value" class="form-control" name="indices">
+                    <!-- <option value="Area">Area (surface area, sq. km)</option> -->
+                    <option value="plots/plot1_3_gini.png">GINI (World Bank Estimate)</option>
+                    <option value="plots/plot1_3_population.png">Population (total)</option>
+                    <option value="plots/plot1_3_GDPperCapita.png">GDP per capita (GDP PPP, $)</option>
+                    <!--<option value="%GDP invested Education">% of GDP invested in Education</option>-->
+                    <option value="plots/plot1_3_mortalityrate.png">Mortality Rate (per 1,000 live births)</option>
+                  </select>
+                  
               </div>
             </div>
           </div>
           <div class="col-md-7">
             <!-- <div id="plot1_3" class="shiny-html-output"></div> -->
-            <img src="plots/plot1_3_gini.png" alt="Image" class="img-fluid">
+            <img src="plots/plot1_3_gini.png" alt="Image" class="img-fluid" id="preview">
           </div>
         </div>
       </div>
@@ -301,9 +303,6 @@ It ranges from 0, where women and men fare equally, to 1, where one gender fares
              <img src="plots/plot4_1_winter.png" alt="Image" class="img-fluid">
           </div>
         </div>
-        
-      
-        
         
         <div class="row align-items-center mb-5">
           <div class="col-md-5 pl-md-5 mb-5 order-md-2">

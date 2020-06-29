@@ -21,7 +21,7 @@ function(input, output) {
                                  hAxis="{title:'Total Medal Count'}",
                                  colorAxis="{legend:{position:'none'}, colors:['#0085C7']}"))
   })
-  
+
   output$plot2_2 <- renderGvis({
     gvisGeoChart(plot2_2, locationvar="region", colorvar="GII",
                  options=list(colorAxis="{colors:['white', '#DF0024']}",
